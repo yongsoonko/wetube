@@ -1,0 +1,29 @@
+{
+  "name": "wetube",
+  "version": "1.0.0",
+  "description": "youtube clone website made by javascript & node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yongsoonko/wetube.git"
+  },
+  "author": "yongsoonko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yongsoonko/wetube/issues"
+  },
+  "homepage": "https://github.com/yongsoonko/wetube#readme",
+  "dependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
