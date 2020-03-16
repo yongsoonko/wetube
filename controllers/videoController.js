@@ -3,7 +3,7 @@ import Video from "../models/Video";
 
 export const home = async (req, res) => {
   try {
-    const videos = await Video.find();
+    const videos = await Video.find().sort({ _id: -1 });
     res.render("home", { pageTitle: "Home", videos });
   } catch (e) {
     console.log(e);
@@ -11,11 +11,20 @@ export const home = async (req, res) => {
   }
 };
 
-export const search = (req, res) => {
+export const search = async (req, res) => {
   const {
     query: { term: searchingBy }
   } = req;
-  res.render("search", { pageTitle: "Search", searchingBy });
+  let videos = [];
+  try {
+    // videos = await Video.find().regex("title", new RegExp(searchingBy, "i"));
+    videos = await Video.find({
+      title: { $regex: searchingBy, $options: "i" }
+    });
+  } catch (e) {
+    console.log(e);
+  }
+  res.render("search", { pageTitle: "Search", searchingBy, videos });
 };
 
 export const getUpload = (req, res) =>
