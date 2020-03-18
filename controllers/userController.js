@@ -1,8 +1,10 @@
+import passport from "passport";
 import routes from "../routes";
+import User from "../models/User";
 
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 
-export const postJoin = (req, res) => {
+export const postJoin = async (req, res, next) => {
   const {
     body: { name, email, password, password2 }
   } = req;
@@ -10,18 +12,69 @@ export const postJoin = (req, res) => {
   if (password !== password2) {
     res.status(400);
     res.render("join", { pageTitle: "Join" });
-  } else res.redirect(routes.home);
+  } else {
+    try {
+      const user = User({
+        name,
+        email
+      });
+      await User.register(user, password);
+      next();
+    } catch (e) {
+      console.log(e);
+      res.redirect(routes.home);
+    }
+  }
 };
 
 export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });
 
-export const postLogin = (req, res) => {
+export const postLogin = passport.authenticate("local", {
+  failureRedirect: routes.login,
+  successRedirect: routes.home
+});
+
+export const githubLogin = passport.authenticate("github");
+export const postGithubLogin = (req, res) => {
   res.redirect(routes.home);
 };
 
-export const logout = (req, res) =>
-  res.render("logout", { pageTitle: "Logout" });
+export const githubLoginCallback = async (
+  accessToken,
+  refreshToken,
+  profile,
+  cb
+  // eslint-disable-next-line consistent-return
+) => {
+  const {
+    _json: { id, avatar_url, name, email }
+  } = profile;
+  console.log(profile._json);
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      user.githubId = id;
+      user.save();
+      return cb(null, user);
+    }
+    const newUser = await User.create({
+      name,
+      email,
+      githubId: id,
+      avatarUrl: avatar_url
+    });
+    return cb(null, newUser);
+  } catch (e) {
+    console.log(e);
+    cb(e);
+  }
+};
+
+export const logout = (req, res) => {
+  req.logout();
+  res.redirect(routes.home);
+};
 
 export const userDetail = (req, res) =>
   res.render("userDetail", { pageTitle: "User Detail" });
