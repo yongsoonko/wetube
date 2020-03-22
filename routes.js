@@ -4,6 +4,7 @@ const JOIN = "/join";
 const LOGIN = "/login";
 const LOGOUT = "/logout";
 const SEARCH = "/search";
+const ME = "/me";
 
 // USER
 const USERS = "/users";
@@ -50,7 +51,8 @@ const routes = {
     return DELETE_VIDEO;
   },
   github: GITHUB,
-  githubCallback: GITHUB_CALLBACK
+  githubCallback: GITHUB_CALLBACK,
+  me: ME
 };
 
 export default routes;

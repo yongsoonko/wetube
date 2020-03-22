@@ -30,10 +30,11 @@ export const postJoin = async (req, res, next) => {
 export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });
 
-export const postLogin = passport.authenticate("local", {
-  failureRedirect: routes.login,
-  successRedirect: routes.home
-});
+export const postLogin = strategy =>
+  passport.authenticate(strategy, {
+    failureRedirect: routes.login,
+    successRedirect: routes.home
+  });
 
 export const githubLogin = passport.authenticate("github");
 export const postGithubLogin = (req, res) => {
@@ -48,9 +49,8 @@ export const githubLoginCallback = async (
   // eslint-disable-next-line consistent-return
 ) => {
   const {
-    _json: { id, avatar_url, name, email }
+    _json: { id, avatar_url: avatarUrl, name, email }
   } = profile;
-  console.log(profile._json);
   try {
     const user = await User.findOne({ email });
     if (user) {
@@ -62,7 +62,7 @@ export const githubLoginCallback = async (
       name,
       email,
       githubId: id,
-      avatarUrl: avatar_url
+      avatarUrl
     });
     return cb(null, newUser);
   } catch (e) {
@@ -78,6 +78,9 @@ export const logout = (req, res) => {
 
 export const userDetail = (req, res) =>
   res.render("userDetail", { pageTitle: "User Detail" });
+
+export const getMyDetail = (req, res) =>
+  res.render("userDetail", { pageTitle: "User Detail", user: req.user });
 
 export const editProfile = (req, res) =>
   res.render("editProfile", { pageTitle: "Edit Profile" });
