@@ -37,9 +37,6 @@ export const postLogin = strategy =>
   });
 
 export const githubLogin = passport.authenticate("github");
-export const postGithubLogin = (req, res) => {
-  res.redirect(routes.home);
-};
 
 export const githubLoginCallback = async (
   accessToken,
@@ -71,13 +68,57 @@ export const githubLoginCallback = async (
   }
 };
 
+export const googleLogin = passport.authenticate("google", {
+  scope: ["profile", "email"]
+});
+
+export const googleLoginCallback = async (
+  accessToken,
+  refreshToken,
+  profile,
+  cb
+  // eslint-disable-next-line consistent-return
+) => {
+  const {
+    _json: { sub: id, picture: avatarUrl, name, email }
+  } = profile;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      user.googleId = id;
+      user.save();
+      return cb(null, user);
+    }
+    const newUser = await User.create({
+      name,
+      email,
+      googleId: id,
+      avatarUrl
+    });
+    return cb(null, newUser);
+  } catch (e) {
+    console.log(e);
+    cb(e);
+  }
+};
+
 export const logout = (req, res) => {
   req.logout();
   res.redirect(routes.home);
 };
 
-export const userDetail = (req, res) =>
-  res.render("userDetail", { pageTitle: "User Detail" });
+export const userDetail = async (req, res) => {
+  const {
+    params: { id }
+  } = req;
+  try {
+    const user = await User.findById(id);
+    res.render("userDetail", { pageTitle: "User Detail", user });
+  } catch (e) {
+    console.log(e);
+    res.redirect(routes.home);
+  }
+};
 
 export const getMyDetail = (req, res) =>
   res.render("userDetail", { pageTitle: "User Detail", user: req.user });
