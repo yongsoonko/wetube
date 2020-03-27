@@ -9,8 +9,10 @@
     "copyAll": "cp -r src/static build && cp -r src/views build && cp -r src/.env build",
     "prebuild": "rm -rf build",
     "build:assets": "src/webpack --mode=production",
-    "build:server": "npm run prebuild && babel src --out-dir build --ignore 'src/assets','src/static','src/webpack.cofig.js && npm run copyAll",
-    "start": "node build/init.js"
+    "build:server": "babel src --out-dir build --ignore 'src/assets','src/static','src/webpack.cofig.js'",
+    "build" : "npm run prebuild && npm run build:server && npm run build:assets && npm run copyAll",
+    "start": "node build/init.js",
+    "prestart": "npm run build"
   },
   "repository": {
     "type": "git",
