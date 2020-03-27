@@ -6,7 +6,7 @@
   "scripts": {
     "dev:start": "nodemon --exec babel-node init.js --delay 2 --ignore '*.scss'",
     "dev:assets": "webpack --mode=development -w",
-    "copyAll": "cp -r src/static build && cp -r src/views build && cp -r src/.env build",
+    "copyAll": "cp -r src/static build && cp -r src/views build",
     "prebuild": "rm -rf build",
     "build:assets": "cd src && webpack --mode=production",
     "build:server": "babel src --out-dir build --ignore 'src/assets','src/static','src/webpack.cofig.js'",
