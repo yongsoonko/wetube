@@ -4,10 +4,13 @@
   "description": "youtube clone website made by javascript & node.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node init.js --delay 2 --ignore '*.scss'",
+    "dev:start": "nodemon --exec babel-node init.js --delay 2 --ignore '*.scss'",
     "dev:assets": "webpack --mode=development -w",
-    "build:assets": "webpack --mode=production"
+    "copyAll": "cp -r src/static build && cp -r src/views build && cp -r src/.env build",
+    "prebuild": "rm -rf build",
+    "build:assets": "src/webpack --mode=production",
+    "build:server": "npm run prebuild && babel src --out-dir build --ignore 'src/assets','src/static','src/webpack.cofig.js && npm run copyAll",
+    "start": "node build/init.js"
   },
   "repository": {
     "type": "git",
@@ -51,15 +54,16 @@
     "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "acorn": ">=5.7.4",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "nodemon": "^2.0.2",
-    "prettier": "^1.19.1",
     "minimist": ">=1.2.2",
-    "acorn": ">=5.7.4"
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1"
   }
 }
