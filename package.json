@@ -4,12 +4,13 @@
   "description": "youtube clone website made by javascript & node.js",
   "main": "index.js",
   "scripts": {
-    "dev:start": "nodemon --exec babel-node init.js --delay 2 --ignore '*.scss'",
-    "dev:assets": "webpack --mode=development -w",
-    "copyAll": "cp -r src/static build && cp -r src/views build",
-    "build:assets": "cd src && webpack --mode=production",
-    "build:server": "babel src --out-dir build --ignore 'src/assets','src/static','src/webpack.cofig.js'",
+    "dev:server": "nodemon --exec babel-node src/init.js --delay 2 --ignore '.scss' --ignore 'static' ",
+    "dev:assets": "cd src && WEBPACK_ENV=development webpack -w",
+    "build:assets": "cd src && WEBPACK_ENV=production webpack",
+    "build:server": "babel src --out-dir build --ignore 'src/assets','src/static','src/webpack.config.js'",
+    "copyAll": "cp -R src/static build && cp -R src/views build",
     "build": "npm run build:server && npm run build:assets && npm run copyAll",
+    "prebuild": "rm -rf build",
     "start": "node build/init.js",
     "prestart": "npm run build"
   },
