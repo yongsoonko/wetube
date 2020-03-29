@@ -283,9 +283,11 @@ var userDetail = /*#__PURE__*/function () {
 exports.userDetail = userDetail;
 
 var getMyDetail = function getMyDetail(req, res) {
-  return res.render("userDetail", {
+  var user = req.user;
+  console.log(user);
+  res.render("userDetail", {
     pageTitle: "User Detail",
-    user: req.user
+    user: user
   });
 };
 

@@ -27,7 +27,8 @@ var UserSchema = new _mongoose["default"].Schema({
   }]
 });
 UserSchema.plugin(_passportLocalMongoose["default"], {
-  usernameField: "email"
+  usernameField: "email",
+  populateFields: "videos"
 });
 
 var model = _mongoose["default"].model("User", UserSchema);

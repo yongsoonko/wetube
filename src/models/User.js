@@ -22,7 +22,8 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.plugin(passportLocalMongoose, {
-  usernameField: "email"
+  usernameField: "email",
+  populateFields: "videos"
 });
 
 const model = mongoose.model("User", UserSchema);

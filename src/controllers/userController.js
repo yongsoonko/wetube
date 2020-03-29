@@ -120,8 +120,11 @@ export const userDetail = async (req, res) => {
   }
 };
 
-export const getMyDetail = (req, res) =>
-  res.render("userDetail", { pageTitle: "User Detail", user: req.user });
+export const getMyDetail = (req, res) => {
+  const { user } = req;
+  console.log(user);
+  res.render("userDetail", { pageTitle: "User Detail", user });
+};
 
 export const getEditProfile = (req, res) =>
   res.render("editProfile", { pageTitle: "Edit Profile" });
