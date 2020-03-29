@@ -11,8 +11,7 @@
     "copyAll": "cp -R src/static build && cp -R src/views build",
     "build": "npm run build:server && npm run build:assets && npm run copyAll",
     "start": "node build/init.js",
-    "prestart": "npm run build",
-    "heroku-prebuild": "npm cache clean --force && rm -rf node_modules package-lock.json"
+    "prestart": "npm run build"
   },
   "repository": {
     "type": "git",
