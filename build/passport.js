@@ -19,13 +19,13 @@ _passport["default"].use(_User["default"].createStrategy());
 _passport["default"].use(new _passportGithub["default"]({
   clientID: process.env.GH_ID,
   clientSecret: process.env.GH_SECRET,
-  callbackURL: "http://localhost:4000".concat(_routes["default"].githubCallback)
+  callbackURL: "https://limitless-beyond-87314.herokuapp.com".concat(_routes["default"].githubCallback)
 }, _userController.githubLoginCallback));
 
 _passport["default"].use(new _passportGoogleOauth["default"]({
   clientID: process.env.GG_ID,
   clientSecret: process.env.GG_SECRET,
-  callbackURL: "http://localhost:4000/auth/google/callback"
+  callbackURL: "https://limitless-beyond-87314.herokuapp.com".concat(GOOGLE_CALLBACK)
 }, _userController.googleLoginCallback));
 
 _passport["default"].serializeUser(_User["default"].serializeUser());
