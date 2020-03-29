@@ -25,7 +25,7 @@ _passport["default"].use(new _passportGithub["default"]({
 _passport["default"].use(new _passportGoogleOauth["default"]({
   clientID: process.env.GG_ID,
   clientSecret: process.env.GG_SECRET,
-  callbackURL: "https://limitless-beyond-87314.herokuapp.com".concat(GOOGLE_CALLBACK)
+  callbackURL: "https://limitless-beyond-87314.herokuapp.com".concat(_routes["default"].googleCallback)
 }, _userController.googleLoginCallback));
 
 _passport["default"].serializeUser(_User["default"].serializeUser());
