@@ -26,7 +26,7 @@ passport.use(
     {
       clientID: process.env.GG_ID,
       clientSecret: process.env.GG_SECRET,
-      callbackURL: `https://limitless-beyond-87314.herokuapp.com${GOOGLE_CALLBACK}`
+      callbackURL: `https://limitless-beyond-87314.herokuapp.com${routes.googleCallback}`
     },
     googleLoginCallback
   )
